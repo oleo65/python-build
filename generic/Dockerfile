@@ -16,4 +16,6 @@ RUN pip install --no-cache-dir \
 
 COPY ./entrypoint.sh /wheelhouse/
 
-ENTRYPOINT [ "entrypoint.sh" ]
+RUN [ "chmod", "+x", "entrypoint.sh" ]
+
+ENTRYPOINT [ "./entrypoint.sh" ]
