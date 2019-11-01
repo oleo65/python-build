@@ -14,8 +14,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir \
     auditwheel
 
-COPY ./entrypoint.sh /wheelhouse/
+COPY pip.conf /etc
+COPY ./entrypoint.sh /
 
-RUN [ "chmod", "+x", "entrypoint.sh" ]
+RUN [ "chmod", "+x", "/entrypoint.sh" ]
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
