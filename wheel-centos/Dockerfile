@@ -1,4 +1,4 @@
-FROM centos-6-python-3.8
+FROM centos7-python3.8
 
 RUN mkdir /wheelhouse
 WORKDIR /wheelhouse

@@ -1,7 +1,7 @@
-FROM centos:centos6
+FROM centos:centos7
 
 RUN yum update -y --skip-broken && \
-    yum install -y gcc gcc-c++ perl-core bzip2-devel zlib-devel libffi-devel \
+    yum install -y gcc gcc-c++ make perl-core bzip2-devel zlib-devel libffi-devel \
     ncurses-devel sqlite-devel xz-devel && \
     yum clean all
 
