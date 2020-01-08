@@ -17,7 +17,7 @@ RUN mkdir /opt/openssl && cd /opt/openssl && \
     rm -rf openssl && \
     echo "/usr/local/openssl/lib" >> /etc/ld.so.conf && ldconfig
 
-ENV PYTHON_VERSION=3.8.0
+ENV PYTHON_VERSION=3.8.1
 
 RUN mkdir /opt/python-build && cd /opt/python-build && \
     curl -fsSL -o Python.tgz https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
