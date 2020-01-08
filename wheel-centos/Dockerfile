@@ -18,8 +18,10 @@ RUN yum -y update && yum install -y \
     (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && make install) && \
     rm -rf patchelf.tar.gz patchelf-$PATCHELF_VERSION
 
+ENV AUDITWHEEL_VERSION=3.0.0.0rc1
+
 RUN pip install --no-cache-dir \
-    auditwheel
+    auditwheel==${AUDITWHEEL_VERSION}
 
 COPY pip.conf /etc
 COPY ./entrypoint.sh /
