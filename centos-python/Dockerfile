@@ -28,6 +28,7 @@ RUN mkdir /opt/python-build && cd /opt/python-build && \
     make install && \
     cd /opt && \
     rm -rf python-build && \
-    ln -s /usr/local/bin/pip3 /usr/local/bin/pip
+    ln -s /usr/local/bin/pip3 /usr/local/bin/pip && \
+    pip install --upgrade pip
 
 ENTRYPOINT [ "bin/bash" ]
