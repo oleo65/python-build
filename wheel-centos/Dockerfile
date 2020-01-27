@@ -18,7 +18,7 @@ RUN yum -y update && yum install -y \
     (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && make install) && \
     rm -rf patchelf.tar.gz patchelf-$PATCHELF_VERSION
 
-ENV AUDITWHEEL_VERSION=3.0.0.0rc1
+ENV AUDITWHEEL_VERSION=3.0.0
 
 RUN pip install --no-cache-dir \
     auditwheel==${AUDITWHEEL_VERSION}
