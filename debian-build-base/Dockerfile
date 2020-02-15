@@ -1,9 +1,13 @@
-FROM arm32v7/centos:centos7
+FROM arm32v7/debian:jessie
 
-RUN yum update -y --skip-broken && \
-    yum install -y gcc gcc-c++ make perl-core bzip2-devel zlib-devel libffi-devel \
-    ncurses-devel sqlite-devel xz-devel && \
-    yum clean all
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # patchelf \
+    unzip \
+    build-essential \
+    perl-base\ 
+    zlib1g-dev \
+    curl \
+    ca-certificates
 
 ENV OPENSSL_VERSION=1.1.1d
 
@@ -18,9 +22,11 @@ RUN mkdir /opt/openssl && cd /opt/openssl && \
     echo "/usr/local/openssl/lib" >> /etc/ld.so.conf && ldconfig
 
 ENV PYTHON_VERSION=3.8.1
+ENV PYTHON_CHECKSUM=f215fa2f55a78de739c1787ec56b2bcd
 
 RUN mkdir /opt/python-build && cd /opt/python-build && \
     curl -fsSL -o Python.tgz https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
+    echo ${PYTHON_CHECKSUM} ./Python.tgz | md5sum -c - &&\
     tar -xf ./Python.tgz && \
     cd Python-${PYTHON_VERSION} && \
     ./configure --with-openssl=/usr/local/openssl --enable-optimizations && \
