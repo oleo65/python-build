@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     (cd patchelf-$PATCHELF_VERSION && ./bootstrap.sh && ./configure && make && make install) && \
     rm -rf patchelf.tar.gz patchelf-$PATCHELF_VERSION
 
-ENV AUDITWHEEL_VERSION=3.0.0
+ENV AUDITWHEEL_VERSION=3.1.0
 
 RUN pip install --no-cache-dir \
     auditwheel==${AUDITWHEEL_VERSION}
