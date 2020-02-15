@@ -5,44 +5,46 @@ if they have complicated dependecies or binary dependencies e.g numpy.
 
 # Usage
 
-First the image needs to be build. The target python version is provided at the top of the Dockerfile.
+First the base image needs to be build. The target python version is provided at the top of the Dockerfile.
 
 ```
-docker build . -t python-build-py3.8
+cd debian-build-base/
+docker build -t debian-build-base .
 ```
 
-Second run the image and provide the name of the package to be build as a parameter. This only works if no further binary dependencies are needed. (Alternative see at the end)
+Second build the `manylinux2014` base image.
 
 ```
-docker run python-build-py3.8 numpy
+cd manylinux2014
+docker build -t manylinux2014 .
 ```
 
-Alternative: Work with a volume is probably more elegant but requires more typing at the run command.
+Third run the image and provide the name of the package to be build as a parameter. This only works if no further binary dependencies are needed. (Alternative see at the end)
 
 ```
-docker run --rm -v /opt/python-build/output:/workdir/wheelhouse python-build-py3.8 numpy
+docker run --rm -v /opt/wheel_build/output:/wheelhouse manylinux2014 numpy
 ```
 
-Last copy the created wheel from the volume out of the container and optionally remove the container.
+Alternative: Work with the specific images tailored for the desired python package, e.g. lxml. Can be used without any parameters if nothing special is required. Will build a wheel of the python package and audit it to manylinux2014 definition.
 
 ```
-docker cp CONTAINER-NAME:/workdir/wheelhouse ./output
+cd packages/lxml/
+docker build -t build/lxml .
+docker run --rm -v /opt/wheel_build/output:/wheelhouse build/lxml
 ```
 
-# Build wheels with dependencies (interactive container)
+Options to run specialized containers are:
 
-Preparing the reusable container for the first time.
-
-```
-docker run -it -v /opt/python-build/output:/wheelhouse --entrypoint /bin/bash python-build-py3.8
-apt-get install libabc-dev
-exit
-```
-
-Reuse the container to build the wheels. This will bring up the previous entrypoint which is `bash` and mount all previous volumes.
+`-t linux_armv7l` specify the target platform other than the default of auditwheel.
+`lxml` provide the package name to be build.
+`4.4.5` (optional): provide a specific version to be build.
 
 ```
-docker start -ai CONTAINER_NAME
-/entrypoint.sh numpy
-exit
+docker run --rm -v /opt/wheel_build/output:wheelhouse build/lxml -t linux_armv7l lxml 4.4.5
 ```
+
+# Troubleshooting
+
+If a build fails try to change the target platform via `-t` to the less compatible `linux_armv7l`. This usually works but makes the wheel less portable.
+
+For debugging purposes omit the `--rm` flag during build and open the container afterwards in interactive mode.
