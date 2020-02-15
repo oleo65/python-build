@@ -23,7 +23,7 @@ RUN mkdir /opt/openssl && cd /opt/openssl && \
     tar -xzf openssl.tar.gz && \
     cd openssl-${OPENSSL_VERSION} && \
     ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib && \
-    make && make install && \
+    make -j 4 && make install && \
     cd /opt && \
     rm -rf openssl && \
     echo "/usr/local/openssl/lib" >> /etc/ld.so.conf && ldconfig
