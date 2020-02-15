@@ -1,3 +1,3 @@
 FROM manylinux2014
 
-ENTRYPOINT [ "./entrypoint", "cffi" ]
+ENTRYPOINT [ "/entrypoint.sh", "cffi" ]
