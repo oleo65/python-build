@@ -1,4 +1,4 @@
-FROM arm32v7/debian:jessie
+FROM debian:buster
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     autoconf \
