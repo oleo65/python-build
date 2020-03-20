@@ -6,7 +6,7 @@ RUN curl -fsSL -o ta-lib.tar.gz http://prdownloads.sourceforge.net/ta-lib/ta-lib
     tar -xf ta-lib.tar.gz && \
     cd ta-lib/ && \
     ./configure --prefix=/usr && \
-    make && \
+    make -j 4 && \
     make install && \
     cd .. && \
     rm ta-lib.tar.gz
