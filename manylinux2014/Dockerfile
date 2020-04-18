@@ -1,5 +1,10 @@
 FROM quay.io/pypa/manylinux2014_aarch64
 
+ENV PYTHONPATH=/opt/python/cp38-cp38/bin
+
+RUN ln -sf $PYTHONPATH/python /usr/bin/python3 && \
+    ln -sf $PYTHONPATH/pip /usr/bin/pip
+
 RUN mkdir /wheelhouse
 WORKDIR /wheelhouse
 VOLUME [ "/wheelhouse" ]
