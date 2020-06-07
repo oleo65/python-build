@@ -13,4 +13,4 @@ RUN curl -fsSL -o ta-lib.tar.gz http://prdownloads.sourceforge.net/ta-lib/ta-lib
     cd .. && \
     rm ta-lib.tar.gz
 
-RUN pip install --no-cache-dir numpy
+RUN pip install --no-cache-dir --only-binary :all: numpy
