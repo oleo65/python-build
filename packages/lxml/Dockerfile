@@ -5,3 +5,5 @@ RUN yum update -y --skip-broken && \
     libxml2-devel \ 
     libxslt-devel && \
     yum clean all
+
+CMD ["lxml"]

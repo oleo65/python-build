@@ -6,3 +6,5 @@ RUN yum update -y --skip-broken && \
     devtoolset-9-gcc-c++ \
     openblas-devel && \
     yum clean all
+
+CMD ["numpy"]
