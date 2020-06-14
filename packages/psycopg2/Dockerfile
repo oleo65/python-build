@@ -16,9 +16,9 @@ RUN curl -o output.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/
     make install && \
     cd .. && \
     rm -rf output && \
-    rm -f output.tar.bz2 && \
-    PATH=/usr/local/pgsql/bin:$PATH && \
-    export PATH
+    rm -f output.tar.bz2
+
+ENV PATH=/usr/local/pgsql/bin:$PATH
 
 COPY ./entrypoint.sh /
 RUN [ "chmod", "+x", "/entrypoint.sh" ]
