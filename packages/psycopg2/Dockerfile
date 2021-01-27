@@ -6,7 +6,7 @@ RUN yum update -y --skip-broken && \
     zlib-devel && \
     yum clean all
 
-ENV PG_VERSION 12.3
+ENV PG_VERSION 13.1
 
 RUN curl -o output.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 && \
     tar -xf output.tar.bz2 && \
