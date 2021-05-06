@@ -1,6 +1,6 @@
 FROM quay.io/pypa/manylinux2014_aarch64
 
-ENV PYTHONPATH=/opt/python/cp38-cp38/bin
+ENV PYTHONPATH=/opt/python/cp39-cp39/bin
 
 RUN ln -sf $PYTHONPATH/python /usr/bin/python3 && \
     ln -sf $PYTHONPATH/pip /usr/bin/pip
