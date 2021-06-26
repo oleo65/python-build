@@ -29,6 +29,12 @@ if [ "$1" != "" ]; then
     pip wheel --no-deps $wheel_definition
 
     created_wheel=$(find . -maxdepth 1 -iname "$1*.whl" -print0 | xargs -r -0 ls -1 -t | head -1)
+
+    # Trying to find wheel based on first two letters if exact match was not successful.
+    if [ "$created_wheel" == "" ]; then
+        created_wheel=$(find . -maxdepth 1 -iname "${1:0:2}*.whl" -print0 | xargs -r -0 ls -1 -t | head -1)
+    fi
+
     echo ${created_wheel}
 
     if [ "$auditwheelPlatform" != "" ]; then
