@@ -1,22 +1,32 @@
 #! /bin/bash
 
-while getopts ":t:" opt; do
+while getopts ":t:p:" opt; do
     case ${opt} in
         t )
             auditwheelPlatform="--plat $OPTARG"
             ;;
+        p )
+            python="$OPTARG"
+            ;;
         \? )
             echo "Invalid option provided."
-            echo "Usage cmd [-t platform_tag] package_name [version_string]"
+            echo "Usage cmd [-t platform_tag] [-p python version] package_name [version_string]"
             ;;
         : )
             echo "No argument provided for $OPTARG"
             echo "Provide valid auditwheel platform tag."
-            echo "E.g. linux_armv7l or manylinux2014_armv7l" 1>&2
+            echo "E.g. linux_armv7l or manylinux2014_armv7l"
+            echo "Python Version 310, 311, etc." 1>&2
             ;;
     esac
 done
 shift $((OPTIND -1))
+
+if [ "$python" != "" ]; then
+    PYTHONPATH=/opt/python/cp$python-cp$python/bin
+    ln -sf $PYTHONPATH/python /usr/bin/python3 && \
+    ln -sf $PYTHONPATH/pip /usr/bin/pip
+fi
 
 if [ "$1" != "" ]; then
 
