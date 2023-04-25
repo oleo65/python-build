@@ -5,43 +5,36 @@ if they have complicated dependecies or binary dependencies e.g numpy.
 
 # Usage
 
-First the base image needs to be build. The target python version is provided at the top of the Dockerfile.
+First the build base image needs to be created with the `manylinux-base` base image.
 
 ```
-cd debian-build-base/
-docker build -t debian-build-base .
+cd manylinux_base/
+docker build -t manylinux-base .
 ```
 
-Second build the `manylinux2014` base image.
+Second run the image and provide the name of the package to be build as a parameter. This only works if no further binary dependencies are needed. (Alternative see at the end)
 
 ```
-cd manylinux2014
-docker build -t manylinux2014 .
+docker run --rm -v /opt/wheel_build/output:/wheelhouse manylinux-base numpy
 ```
 
-Third run the image and provide the name of the package to be build as a parameter. This only works if no further binary dependencies are needed. (Alternative see at the end)
+Alternative: Work with the specific images tailored for the desired python package, e.g. ta-lib. Can be used without any parameters if nothing special is required. Will build a wheel of the python package and audit it to the most recent manylinux definition.
 
 ```
-docker run --rm -v /opt/wheel_build/output:/wheelhouse manylinux2014 numpy
-```
-
-Alternative: Work with the specific images tailored for the desired python package, e.g. lxml. Can be used without any parameters if nothing special is required. Will build a wheel of the python package and audit it to manylinux2014 definition.
-
-```
-cd packages/lxml/
-docker build -t build/lxml .
-docker run --rm -v /opt/wheel_build/output:/wheelhouse build/lxml
+cd packages/ta-lib/
+docker build -t build/ta-lib .
+docker run --rm -v /opt/wheel_build/output:/wheelhouse build/ta-lib
 ```
 
 Options to run specialized containers are:
 
 `-t linux_armv7l` specify the target platform other than the default of auditwheel.
 `-p 311` specify the desired python version, e.g. `310`, `311`
-`lxml` provide the package name to be build.
-`4.4.5` (optional): provide a specific version to be build.
+`ta-lib` provide the package name to be build.
+`0.4.25` (optional): provide a specific version to be build.
 
 ```
-docker run --rm -v /opt/wheel_build/output:wheelhouse build/lxml -t linux_armv7l lxml 4.4.5
+docker run --rm -v /opt/wheel_build/output:wheelhouse build/ta-lib -t linux_armv7l ta-lib 0.4.25
 ```
 
 # Troubleshooting

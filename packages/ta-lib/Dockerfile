@@ -1,4 +1,4 @@
-FROM manylinux2014
+FROM manylinux-base
 
 ENV TALIB_VERSION=0.4.0
 

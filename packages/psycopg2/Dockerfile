@@ -1,4 +1,4 @@
-FROM manylinux2014
+FROM manylinux-base
 
 RUN yum update -y --skip-broken && \
     yum install -y \
