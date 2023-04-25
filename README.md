@@ -36,6 +36,7 @@ docker run --rm -v /opt/wheel_build/output:/wheelhouse build/lxml
 Options to run specialized containers are:
 
 `-t linux_armv7l` specify the target platform other than the default of auditwheel.
+`-p 311` specify the desired python version, e.g. `310`, `311`
 `lxml` provide the package name to be build.
 `4.4.5` (optional): provide a specific version to be build.
 
